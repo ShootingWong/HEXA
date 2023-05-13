@@ -101,3 +101,25 @@ We also provide the trained checkpoint in by google driver.
 For AOL: https://drive.google.com/file/d/1gDdCDU_HFZhTUfQdVUIrBFoEyfixdLTl/view?usp=share_link
 
 For Tiangong-ST: https://drive.google.com/file/d/1VVm3PL3UZE_Pj-qZIb4cS0Byih_w2qv_/view?usp=share_link
+
+## Citations
+If you use the code and datasets, please cite the following paper:  
+```
+@inproceedings{HEXA_2023WSDM,
+author = {Wang, Shuting and Dou, Zhicheng and Zhu, Yutao},
+title = {Heterogeneous Graph-Based Context-Aware Document Ranking},
+year = {2023},
+isbn = {9781450394079},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3539597.3570390},
+doi = {10.1145/3539597.3570390},
+abstract = {Users' complex information needs usually require consecutive queries, which results in sessions with a series of interactions. Exploiting such contextual interactions has been proven to be favorable for result ranking. However, existing studies mainly model the contextual information independently and sequentially. They neglect the diverse information hidden in different relations and structured information of session elements as well as the valuable signals from other relevant sessions. In this paper, we propose HEXA, a heterogeneous graph-based context-aware document ranking framework. It exploits heterogeneous graphs to organize the contextual information and beneficial search logs for modeling user intents and ranking results. Specifically, we construct two heterogeneous graphs, i.e., a session graph and a query graph. The session graph is built from the current session queries and documents. Meanwhile, we sample the current query's k-layer neighbors from search logs to construct the query graph. Then, we employ heterogeneous graph neural networks and specialized readout functions on the two graphs to capture the user intents from local and global aspects. Finally, the document ranking scores are measured by how well the documents are matched with the two user intents. Results on two large-scale datasets confirm the effectiveness of our model.},
+booktitle = {Proceedings of the Sixteenth ACM International Conference on Web Search and Data Mining},
+pages = {724–732},
+numpages = {9},
+keywords = {context-aware document ranking, related sessions, heterogeneous graph},
+location = {Singapore, Singapore},
+series = {WSDM '23}
+}
+```
