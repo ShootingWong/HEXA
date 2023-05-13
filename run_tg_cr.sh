@@ -1,1 +1,1 @@
-python -u RankRun.py --per_gpu_batch_size 64 --per_gpu_test_batch_size 64 --learning_rate 2e-5 --bert_lr 2e-5 --suffix final --epochs 5 --task tiangong --config_type basic_config_tg --bert_model_path ./BertChinese --seed 0 --test_type last --is_training 0
+python RankRun.py --per_gpu_batch_size 64 --per_gpu_test_batch_size 64 --learning_rate 2e-5 --bert_lr 2e-5 --suffix final --epochs 5 --task tiangong --config_type basic_config_tg --bert_model_path ./BertChinese --seed 0 --test_type last --is_training 0

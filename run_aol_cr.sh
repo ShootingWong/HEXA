@@ -1,0 +1,1 @@
+python RankRun.py --per_gpu_batch_size 32 --per_gpu_test_batch_size 128 --learning_rate 1e-5 --bert_lr 1e-5 --suffix final --epochs 5 --task aol --config_type basic_config --bert_model_path ./bert --seed 0 --is_training 0 
