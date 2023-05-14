@@ -145,7 +145,7 @@ for k, v in args_dict.items():
 
 if args.task == "aol":
     train_data = "./aol/train.rank.onlypos.txt"
-    test_data = "./aol/test.rank.small.txt"
+    test_data = "./aol/dev.rank.txt"
     predict_data = "./aol/test.rank.txt"
     tokenizer = BertTokenizer.from_pretrained(args.bert_model_path)
     additional_tokens = 3
@@ -156,7 +156,7 @@ if args.task == "aol":
     print('EOS = ', EOS)
 elif args.task == "tiangong":
     train_data = "./tiangong/train.onlypos.txt"
-    test_data = "./tiangong/test_last.txt"
+    test_data = "./tiangong/dev_last.txt"
     predict_last_data = "./tiangong/test_last.txt"
     tokenizer = BertTokenizer.from_pretrained(args.bert_model_path)
     additional_tokens = 4
