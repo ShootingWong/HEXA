@@ -1,7 +1,3 @@
-'''
-To be continue....
-'''
-
 ### File organization
 ```
 HEXA
