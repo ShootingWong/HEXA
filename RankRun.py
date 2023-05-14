@@ -176,8 +176,8 @@ if args.task == "aol":
     print('EOS = ', EOS)
 elif args.task == "tiangong":
     train_data = "./tiangong/train.txt"
-    predict_last_data = "./tiangong/dev_last.txt"
-    test_data = predict_last_data
+    predict_last_data = "./tiangong/test_last.txt"
+    test_data = "./tiangong/dev_last.txt"
     tokenizer = BertTokenizer.from_pretrained(args.bert_model_path)
     additional_tokens = 4
     
