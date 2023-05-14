@@ -17,7 +17,7 @@ HEXA
 
 --output # save the output files containing the evaluating scores for validation/test samples, output files from datasets are saved in corresponding folders(output/${dataset_name}).  
 
---model #save the checkpoint of trained model.
+--model #save the checkpoint of the trained model.
 
 --${dataset_name} #save the training/validation/test data for corresponding datasets.
 
@@ -26,9 +26,9 @@ HEXA
 ### Data Process
 #### 1. Graph Construction
 
-You can conduct graph construction by running the graph_allprocess_${dataset_name}.py. The correspoing data files will be saved in the folder, "process_data_${dataset_name}"
+You can conduct graph construction by running the graph_allprocess_${dataset_name}.py. The corresponding data files will be saved in the folder, "process_data_${dataset_name}"
 
-Note that the format original data used to generate training/validation/test samples and graph-related datas is json and each line represents a session. The format details are shown in below.
+Note that the format of original data used to generate training/validation/test samples and graph-related data is JSON and each line represents a session. The format details are shown below.
 ```
 session = {
     "session_id": session_id, # str | session_id,
@@ -46,7 +46,7 @@ clicks[i] = {
 }
 ```
 
-We also provide the processed graph data by Google Drive 
+We also provide the processed graph data via Google Drive 
 
 For AOL: https://drive.google.com/file/d/1hs_4knfF_N_fN-eaZtg9rYjxurd2DZyr/view?usp=share_link
 
@@ -54,23 +54,23 @@ For Tiangong-ST: https://drive.google.com/file/d/1KiW6LVWjK8egpTc-WPn38rLPLE4zjU
 
 #### 2. Generation of training/validation/test data files.
 
-In this step, you should process the original data to the format that is suitable to train the ranking model. 
+In this step, you should process the original data in the format that is suitable to train the ranking model. 
 You can write code to generate the train/validation/test data that conforms to the following format:
 ```
 label \t q_1 \t d_1 \t ... \t q_K \t d_K \t q \t d \t gid_q_1 \t gid_d_1 \t ... \t gid_q_K \t gid_d_K \t gid_q \t gid_d
 ```
-It means that there are K historical query (q_i) for the current query "q". Each history query has a clicked document (d_i). Based on this contextual information, we need to predict the relevance of the candidate "d". The relevance label of d is "label" (the first item).
-gid_xxx denotes corresponding graph ids of these queries or documents, which are obtained by the step 1.
+It means that there are K historical queries (q_i) for the current query "q". Each history query has a clicked document (d_i). Based on this contextual information, we need to predict the relevance of candidate "d". The relevance label of d is "label" (the first item).
+gid_xxx denotes the corresponding graph ids of these queries or documents, which are obtained by step 1.
 
 
-Note that you can obtain the Tiangong-ST dataset by this url "http://www.thuir.cn/tiangong-st/", and AOL dataset by contact to the author of the paper, "Context Attentive Document Ranking and Query Suggestion".
+Note that you can obtain the Tiangong-ST dataset by this URL "http://www.thuir.cn/tiangong-st/", and the AOL dataset by contact to the author of the paper, "Context Attentive Document Ranking and Query Suggestion".
 
 
 #### 3. Node Embedding Construction
 
 Finally, we should prepare the initial node embeddings by training a two-tower Bert-based matching model. 
 
-We provide the trained two-tower model by Google driver
+We provide the trained two-tower model via Google Grive
 
 For AOL: https://drive.google.com/file/d/1JE7K6hmcOLGkld14EDbymywZGGXlzFKB/view?usp=share_link
 
@@ -85,14 +85,14 @@ Then, run the following command to save the node embedding in the folder "proces
 ```
 python get_id_embedding_${dataset_name}.py
 ```
-We also provide the proprocessed node embeddings by Google Drive (Pleases refer to step 1).
+We also provide the preprocessed node embeddings via Google Drive (Pleases refer to step 1).
 
 ### Training Model
-After data processing, we can train the HEXA by following commands 
+After data processing, we can train the HEXA by following the command,
 ```
 bash run_tg_cr.sh
 ```
-We also provide the trained checkpoint in by google driver.
+We also provide the trained checkpoint via Google Drive.
 
 For AOL: https://drive.google.com/file/d/1gDdCDU_HFZhTUfQdVUIrBFoEyfixdLTl/view?usp=share_link
 
