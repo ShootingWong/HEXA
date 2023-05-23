@@ -9,6 +9,7 @@ import copy
 
 bert_path = r'BertChinese'
 
+max_freq=0
 query2id = dict()
 id2query = dict()
 doc2id = dict()
