@@ -7,9 +7,9 @@ from tqdm import tqdm
 from transformers import BertTokenizer, BertModel
 import copy
 
+max_freq = 0
 bert_path = r'BertChinese'
 
-max_freq=0
 query2id = dict()
 id2query = dict()
 doc2id = dict()
@@ -311,48 +311,15 @@ def get_edge_freq():
         session_d_graph, ids_train, n_click_neb_q, n_top_neb_q, n_back_neb_q, n_pre_neb_q, n_click_neb_d, n_top_neb_d, \
         n_back_neb_d, n_pre_neb_d, n_click_neb_q_freq, n_click_neb_d_freq, n_top_neb_q_freq, n_top_neb_d_freq, \
         n_back_neb_q_freq, n_pre_neb_q_freq, n_back_neb_d_freq, n_pre_neb_d_freq
+    print('Begin to get_edge_freq')
     max_id = max(max(query2id.values()), max(doc2id.values())) + 1
-    max_nei_cnt = 0
-    for node in click_neb_q:
-        max_nei_cnt = max(max_nei_cnt, len(click_neb_q[node]))
-    for node in top_neb_q:
-        max_nei_cnt = max(max_nei_cnt, len(top_neb_q[node]))
-    for node in pre_neb_q:
-        max_nei_cnt = max(max_nei_cnt, len(pre_neb_q[node]))
-    for node in back_neb_q:
-        max_nei_cnt = max(max_nei_cnt, len(back_neb_q[node]))
-    for node in click_neb_d:
-        max_nei_cnt = max(max_nei_cnt, len(click_neb_d[node]))
-    for node in top_neb_d:
-        max_nei_cnt = max(max_nei_cnt, len(top_neb_d[node]))
-    for node in pre_neb_d:
-        max_nei_cnt = max(max_nei_cnt, len(pre_neb_d[node]))
-    for node in back_neb_d:
-        max_nei_cnt = max(max_nei_cnt, len(back_neb_d[node]))
 
-    n_click_neb_q_freq = np.zeros([max_id, max_nei_cnt])
-    n_top_neb_q_freq = np.zeros([max_id, max_nei_cnt])
-    n_back_neb_q_freq = np.zeros([max_id, max_nei_cnt])
-    n_pre_neb_q_freq = np.zeros([max_id, max_nei_cnt])
-    n_click_neb_d_freq = np.zeros([max_id, max_nei_cnt])
-    n_top_neb_d_freq = np.zeros([max_id, max_nei_cnt])
-    n_back_neb_d_freq = np.zeros([max_id, max_nei_cnt])
-    n_pre_neb_d_freq = np.zeros([max_id, max_nei_cnt])
+    for node in tqdm(click_neb_q):
 
-    n_click_neb_q = np.zeros([max_id, max_nei_cnt])
-    n_top_neb_q = np.zeros([max_id, max_nei_cnt])
-    n_back_neb_q = np.zeros([max_id, max_nei_cnt])
-    n_pre_neb_q = np.zeros([max_id, max_nei_cnt])
-    n_click_neb_d = np.zeros([max_id, max_nei_cnt])
-    n_top_neb_d = np.zeros([max_id, max_nei_cnt])
-    n_back_neb_d = np.zeros([max_id, max_nei_cnt])
-    n_pre_neb_d = np.zeros([max_id, max_nei_cnt])
-
-    for node in click_neb_q:
-        # n_click_neb_q_freq[node] = [0]*len(click_neb_q[node])
-        # n_top_neb_q_freq[node] = [0]*len(top_neb_q[node])
-        # n_back_neb_q_freq[node] = [0]*len(back_neb_q[node])
-        # n_pre_neb_q_freq[node] = [0]*len(pre_neb_q[node])
+        n_click_neb_q_freq[node] = [0]*len(click_neb_q[node])
+        n_top_neb_q_freq[node] = [0]*len(top_neb_q[node])
+        n_back_neb_q_freq[node] = [0]*len(back_neb_q[node])
+        n_pre_neb_q_freq[node] = [0]*len(pre_neb_q[node])
 
         click_neb_q[node] = list(click_neb_q[node])
         top_neb_q[node] = list(top_neb_q[node])
@@ -362,25 +329,25 @@ def get_edge_freq():
         # mom = sum(click_neb_q[node])
         for i, nei in enumerate(click_neb_q[node]):
             n_click_neb_q_freq[node][i] = click_neb_q_freq[node][nei] #/ mom
-            n_click_neb_q[node][i] = nei
+            #n_click_neb_q[node][i] = nei
         # mom = sum(top_neb_q[node])
         for i, nei in enumerate(top_neb_q[node]):
             n_top_neb_q_freq[node][i] = top_neb_q_freq[node][nei] # mom
-            n_top_neb_q[node][i] = nei
+            #n_top_neb_q[node][i] = nei
         # mom = sum(back_neb_q[node])
         for i, nei in enumerate(back_neb_q[node]):
             n_back_neb_q_freq[node][i] = back_neb_q_freq[node][nei] #/ mom
-            n_back_neb_q[node][i] = nei
+            #n_back_neb_q[node][i] = nei
         # mom = sum(pre_neb_q[node])
         for i, nei in enumerate(pre_neb_q[node]):
             n_pre_neb_q_freq[node][i] = pre_neb_q_freq[node][nei] #/ mom
-            n_pre_neb_q[node][i] = nei
+            #n_pre_neb_q[node][i] = nei
 
-    for node in click_neb_d:
-        # n_click_neb_d_freq[node] = [0]*len(click_neb_d[node])
-        # n_top_neb_d_freq[node] = [0]*len(top_neb_d[node])
-        # n_back_neb_d_freq[node] = [0]*len(back_neb_d[node])
-        # n_pre_neb_d_freq[node] = [0]*len(pre_neb_d[node])
+    for node in tqdm(click_neb_d):
+        n_click_neb_d_freq[node] = [0]*len(click_neb_d[node])
+        n_top_neb_d_freq[node] = [0]*len(top_neb_d[node])
+        n_back_neb_d_freq[node] = [0]*len(back_neb_d[node])
+        n_pre_neb_d_freq[node] = [0]*len(pre_neb_d[node])
 
         click_neb_d[node] = list(click_neb_d[node])
         top_neb_d[node] = list(top_neb_d[node])
@@ -390,19 +357,20 @@ def get_edge_freq():
         # mom = sum(click_neb_d[node])
         for i, nei in enumerate(click_neb_d[node]):
             n_click_neb_d_freq[node][i] = click_neb_d_freq[node][nei]# / mom
-            n_click_neb_d[node][i] = nei
+            #n_click_neb_d[node][i] = nei
         # mom = sum(top_neb_d[node])
         for i, nei in enumerate(top_neb_d[node]):
             n_top_neb_d_freq[node][i] = top_neb_d_freq[node][nei]# / mom
-            n_top_neb_d[node][i] = nei
+            #n_top_neb_d[node][i] = nei
         # mom = sum(back_neb_d[node])
         for i, nei in enumerate(back_neb_d[node]):
             n_back_neb_d_freq[node][i] = back_neb_d_freq[node][nei]# / mom
-            n_back_neb_d[node][i] = nei
+            #n_back_neb_d[node][i] = nei
         # mom = sum(pre_neb_d[node])
         for i, nei in enumerate(pre_neb_d[node]):
             n_pre_neb_d_freq[node][i] = pre_neb_d_freq[node][nei]# / mom
-            n_pre_neb_d[node][i] = nei
+            #n_pre_neb_d[node][i] = nei
+    print('End to get_edge_freq')
 
 
 def cutting(node, new_freqs, neighs):
@@ -415,9 +383,11 @@ def cutting(node, new_freqs, neighs):
         new_freqs[neighs.index(select)] -= 1
         deal = np.sum(new_freqs)
         cut += 1
-    if cut > 0:
-        print('node : {} cut {}'.format(node, cut))
+    #if cut > 0:
+    #    print('node : {} cut {}'.format(node, cut))
     return new_freqs
+    
+    
 def padding(new_freqs, neighs, max_):
     new_sum = np.sum(np.array(new_freqs))
     norm_freq = new_freqs / new_sum
@@ -438,13 +408,30 @@ def get_deal(node, freqs, neigs):
     new_new_freqs = np.round(new_freqs / new_sum * max_, 0)
     deal = np.sum(new_new_freqs)
 
+    if deal == 0:
+        ind = np.array(list(reversed(np.argsort(freqs)))[:100], dtype=np.int)
+        new_freqs = np.array(freqs)[ind].tolist()
+        neigs = np.array(neigs)[ind].tolist()
+        new_sum = np.sum(new_freqs)
+        new_new_freqs = np.round(new_freqs / new_sum * max_, 0)
+        deal = np.sum(new_new_freqs)
+
+        # print('new_freqs = {} newnewfreqs = {} deal = {}'.format(new_freqs, new_new_freqs, deal))
+        # print('edge = {} node = {} | neighs = {}'.format(e, get_str(node), [get_str(nei) for nei in neigs]))
+
     cnt = 0
     last_deal = deal
-    while deal < 0.95*max_:
+    while deal < 0.95 * max_:
         cnt += 1
+        # try:
         new_new_freqs = np.round(new_new_freqs / deal * max_, 0)
+        # except:
+        #     print('new_new_freqs = {} deal = {}'.format(new_new_freqs, deal))
         deal = np.sum(new_new_freqs)
-        if deal == last_deal : break
+        # if deal == 0 :
+        #     print('last deal = {} deal = {} new_new_freqs = {} freqs = {}'.format(last_deal, deal, new_new_freqs, freqs))
+        #     assert 1==0
+        if deal == last_deal: break
 
         last_deal = deal
 
@@ -464,23 +451,25 @@ def get_deal(node, freqs, neigs):
         n4_freq = n3_freq
         n4_neigs = new_neigs
     if deal != max_:
-        print('min deal = {}, n4 freq = {} n3_freq = {} new new freqs = {}'.format(deal, n4_freq, n3_freq, new_new_freqs))
+        print(
+            'min deal = {}, n4 freq = {} n3_freq = {} new new freqs = {}'.format(deal, n4_freq, n3_freq, new_new_freqs))
     assert deal == max_
     if len(np.array(n4_freq).shape) > 1:
         print('node {} freqs {} new freqs {} n4 freq = {}'.format(node, freqs, new_neigs, n4_freq))
     return n4_freq, n4_neigs
 
 
+
 def save_data():
     neighbor_dictlist = [
-        n_click_neb_q,
-        n_click_neb_d,
-        n_top_neb_q,
-        n_top_neb_d,
-        n_back_neb_q,
-        n_pre_neb_q,
-        n_back_neb_d,
-        n_pre_neb_d
+        click_neb_q,
+        click_neb_d,
+        top_neb_q,
+        top_neb_d,
+        back_neb_q,
+        pre_neb_q,
+        back_neb_d,
+        pre_neb_d
     ]
 
     neighbor_freq_dictlist = [
@@ -493,8 +482,8 @@ def save_data():
         n_back_neb_d_freq,
         n_pre_neb_d_freq
     ]
-    pickle.dump(neighbor_dictlist, open(r'./process_data_tg/neighbor_dictlist.pkl', 'wb'))
-    pickle.dump(neighbor_freq_dictlist, open(r'./process_data_tg/neighbor_freq_dictlist.pkl', 'wb'))
+    #pickle.dump(neighbor_dictlist, open(r'./process_data_tg_test/neighbor_dictlist.pkl', 'wb'))
+    #pickle.dump(neighbor_freq_dictlist, open(r'./process_data_tg_test/neighbor_freq_dictlist.pkl', 'wb'))
     '''
     get round
     '''
@@ -523,17 +512,17 @@ def save_data():
     print('--------------------BEGIN TO GET ARRAY--------------------')
     maxid = max(max(list(query2id.values())), max(list(doc2id.values()))) + 1
     minid = min(min(list(query2id.values())), min(list(doc2id.values())))
-   
+
     max_nei_len = 0
-    for e_nei in neighbor_dictlist:
+    for e_nei in new_neighbors:
         for node in e_nei:
             max_nei_len = max(max_nei_len, len(e_nei[node]))
-    
-    neighbor = [np.zeros([maxid, max_nei_len]) for i in range(8)]
-    freq = [np.zeros([maxid, max_nei_len]) for i in range(8)]
+
+    neighbor = np.array([np.zeros([maxid, max_nei_len]) for i in range(8)])
+    freq = np.array([np.zeros([maxid, max_nei_len]) for i in range(8)])
     for e in range(8):
-        e_neighbor = neighbor_dictlist[e]
-        e_freqs = neighbor_freq_dictlist[e]
+        e_neighbor = new_neighbors[e]
+        e_freqs = new_freqs[e]
         for node in tqdm(e_neighbor):
             length = len(e_neighbor[node])
             neighbor[e][node][:length] = e_neighbor[node]
@@ -565,12 +554,12 @@ def save_data():
             if pre != 100 and pre != 0:
                 print('pre =', pre)
 
-        pickle.dump(prefix[i,:,:], open(r'./process_data_tg/sample_neighbor_prefix_1b{}.pkl'.format(i), 'wb'))
+        pickle.dump(prefix[i,:,:], open(r'./process_data_tg_test/sample_neighbor_prefix_1b{}.pkl'.format(i), 'wb'))
         
     print('--------------------SAVE OVER--------------------')
 
-construct_ind(r'./coca_data/tiangong/train_candidate.json', train=True)
-construct_ind(r'./coca_data/tiangong/test_candidate.json', train=False)
-construct_ind(r'./coca_data/tiangong/dev_candidate.json', train=False)
+construct_ind(r'../../coca_data/tiangong/train_candidate.json', train=True)
+construct_ind(r'../../coca_data/tiangong/test_candidate.json', train=False)
+construct_ind(r'../../coca_data/tiangong/dev_candidate.json', train=False)
 get_edge_freq()
 save_data()
