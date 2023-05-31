@@ -482,8 +482,6 @@ def save_data():
         n_back_neb_d_freq,
         n_pre_neb_d_freq
     ]
-    #pickle.dump(neighbor_dictlist, open(r'./process_data_tg_test/neighbor_dictlist.pkl', 'wb'))
-    #pickle.dump(neighbor_freq_dictlist, open(r'./process_data_tg_test/neighbor_freq_dictlist.pkl', 'wb'))
     '''
     get round
     '''
@@ -554,7 +552,7 @@ def save_data():
             if pre != 100 and pre != 0:
                 print('pre =', pre)
 
-        pickle.dump(prefix[i,:,:], open(r'./process_data_tg_test/sample_neighbor_prefix_1b{}.pkl'.format(i), 'wb'))
+        pickle.dump(prefix[i,:,:], open(r'./process_data_tg/sample_neighbor_prefix_1b{}.pkl'.format(i), 'wb'))
         
     print('--------------------SAVE OVER--------------------')
 
